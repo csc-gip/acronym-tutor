@@ -1,0 +1,53 @@
+body {
+    font-family: sans-serif; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #292929;
+    color: white;
+}
+
+.container {
+    text-align: center;
+    background-color: black;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 50%;
+}
+
+.large-text {
+    font-size: 96px;
+    font-weight: bold;
+    margin: 10px;
+    color: darkorange;
+    letter-spacing: 4px;
+}
+
+.tiny-text {
+    font-size: 12px;
+    margin: 10px;
+    color: white;
+}
+
+.small-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.toggle-text {
+    font-size: 16px;
+    margin: 10px;
+    transition: color 0.3s ease-in-out;
+    color: black;
+    cursor: pointer;
+    word-wrap: normal;
+}
+
+.toggle-text:hover {
+    color: white;
+}

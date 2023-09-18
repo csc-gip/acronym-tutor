@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acronyms</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Load the dictionary data script -->
+    <script src="dictionary.js"></script>
+    <script>
+
+        // Load and display a random dictionary entry
+        function loadRandomDictionaryEntry() {
+            const randomIndex = Math.floor(Math.random() * dictionaryData.length);
+            const entry = dictionaryData[randomIndex];
+
+            // Display the values in the HTML elements
+            document.getElementById('acronym').textContent = entry.a;
+            document.getElementById('category').textContent = entry.c;
+            document.getElementById('explanation').textContent = entry.e;
+            document.getElementById('description').textContent = entry.d;
+        }
+
+        loadRandomDictionaryEntry();
+    </script>
+</head>
+
+<body onload="loadRandomDictionaryEntry();">
+    <div class="container">
+        <div class="large-text" id="acronym">Large Text</div>
+        <div class="tiny-text" id="category">Tiny Text</div>
+        <div class="toggle-text"><span class="small-text"  id="explanation">Small Text</span>
+            <p id="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec justo eget urna
+                varius fermentum.</p>
+        </div>
+    </div>
+</body>
+
+</html>
