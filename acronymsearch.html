@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API
+https://github.com/mdn/dom-examples/blob/main/web-speech-api/speech-color-changer/script.js -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acronyms</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="styles.css">
+    <!-- Load the dictionary data script -->
+    <script src="dictionary.js"></script>
+
+    <script>
+        const SpeechRecognition =
+            window.SpeechRecognition || window.webkitSpeechRecognition;
+        const SpeechGrammarList =
+            window.SpeechGrammarList || window.webkitSpeechGrammarList;
+        const SpeechRecognitionEvent =
+            window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+
+        const uniqAcronyms = [...new Set(dictionaryData.map((e) => e.a).sort((a, b) => a.localeCompare(b)))];
+
+        const recognition = new SpeechRecognition();
+        if (SpeechGrammarList) {
+            // SpeechGrammarList is not currently available in Safari, and does not have any effect in any other browser.
+            // This code is provided as a demonstration of possible capability. You may choose not to use it.
+            var speechRecognitionList = new SpeechGrammarList();
+            var grammar = '#JSGF V1.0; grammar colors; public <acronyms> = ' + uniqAcronyms.join(' | ') + ' ;'
+            speechRecognitionList.addFromString(grammar, 1);
+            recognition.grammars = speechRecognitionList;
+        }
+
+        recognition.grammars = speechRecognitionList;
+        recognition.continuous = false;
+        recognition.lang = "de-DE";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 5;
+
+        recognition.onresult = (event) => {
+            const acronym = event.results[0][0].transcript;
+            const searchbar = document.getElementById("search-text");
+            const dbgOutput = document.getElementById("dbgOutput");
+            dbgOutput.textContent = `Result received: ${acronym}.` +
+                `Confidence: ${event.results[0][0].confidence} `;
+
+            for (var i = 0; event.results.item(0).lentgh; i++) {
+                dbgOutput.textContent += event.results.item(0).item(i) + "; "
+            }
+
+            searchbar.value = `${acronym}`;
+
+            if (searchbar.value != "...") {
+                searchbar.value = `${acronym}`;
+                searchArconym();
+            } else {
+                searchbar.value = "";
+            }
+        };
+
+        recognition.onspeechend = () => {
+            recognition.stop();
+        };
+
+        recognition.onnomatch = (event) => {
+            const errorOutput = document.getElementById("errorOutput");
+            errorOutput.textContent = "I didn't recognize that.";
+            const searchbar = document.getElementById("search-text");
+            searchbar.value = "";
+        };
+
+        recognition.onerror = (event) => {
+            const errorOutput = document.getElementById("errorOutput");
+            errorOutput.textContent = `Error occurred in recognition: ${event.error}`;
+            const searchbar = document.getElementById("search-text");
+            searchbar.value = "";
+        };
+
+        function searchArconym() {
+            const searchbar = document.getElementById("search-text");
+            const matches = dictionaryData.filter((e) => e.a.toLowerCase() === searchbar.value.toLowerCase());
+            matches.forEach((m) => {
+                const dbgOutput = document.getElementById("dbgOutput");
+                dbgOutput.textContent = dbgOutput.textContent + ` ${m.a}`
+
+                document.getElementById('acronym').textContent = m.a;
+                document.getElementById('category').textContent = m.c;
+                document.getElementById('explanation').textContent = m.e;
+                document.getElementById('description').textContent = m.d;
+
+                const errorOutput = document.getElementById("errorOutput");
+                errorOutput.textContent = ""
+            });
+            if (matches.length === 0) {
+                const errorOutput = document.getElementById("errorOutput");
+                errorOutput.textContent = "unbekannt."
+            }
+        }
+
+        function startRecognition() {
+            recognition.start();
+            const searchbar = document.getElementById("search-text");
+            searchbar.value = "..."
+            const errorOutput = document.getElementById("errorOutput");
+            errorOutput.textContent = ""
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container" id="dbgOutput" style="display: none">
+    </div>
+    <div class="serach-input" oninput="searchArconym();"><input type="search" id="search-text" /><span
+            class="material-symbols-outlined" onclick="startRecognition();">
+            mic
+        </span></div>
+    <div class="error" id="errorOutput" style="display: block">
+    </div>
+    <div class="container">
+        <div class="large-text" id="acronym"></div>
+        <div class="tiny-text" id="category"></div>
+        <div class="description-text"><span class="small-text" id="explanation"></span>
+            <p id="description"></p>
+        </div>
+    </div>
+</body>
+
+</html>
