@@ -20,7 +20,7 @@ const dictionaryData = [
     {"a": "NRF", "c": "5G", "e": "Network Repository Function", "d": "A function in 5G responsible for storing network function profiles and service information."},
     {"a": "NEF", "c": "5G", "e": "Network Exposure Function", "d": "A function in 5G that exposes network capabilities and services to external applications."},
     {"a": "UDR", "c": "5G", "e": "Unified Data Repository", "d": "A network function in 5G that stores subscriber data and user-related information."},
-    {"a": "IPUPS", "c": "5G", "e": "Interworking Proxy for User Plane Security", "d": "A proxy function in 5G responsible for user plane security during interworking."},
+    {"a": "IPUPS", "c": "5G", "e": "Inter-PLMN User Plane Security", "d": "In the 5GS security architecture the IPUPS functionality within UPF correlates user plane sessions over the N9 reference point with SMF control plane sessions and drop invalid user plane sessions if there is no match."},
     {"a": "SUCI", "c": "5G", "e": "Subscription Concealed Identifier", "d": "A unique identifier in 5G that conceals a subscriber's identity for privacy and security purposes. The SUCI is used in authentication and signaling procedures within 5G networks to protect user identity while ensuring secure network access."},
     {"a": "SUPI", "c": "5G", "e": "Subscription Permanent Identifier", "d": "An identifier in 5G that uniquely represents a subscriber's identity and subscription profile within a mobile network. The SUPI is used for various network functions, including authentication and authorization."},
     {"a": "5GS", "c": "5G", "e": "5G System", "d": "The entire 5G network system, including radio access, core network, and services."},
